@@ -140,5 +140,5 @@
             }
         }
     }
-    customElements.define("com-sap-custom-geomap-aps", restAPIAps);
+    customElements.define("com-sap-custom-ledgeomap-aps", restAPIAps);
 })();
