@@ -31,7 +31,7 @@
     //
     // A definition query filters what was first retrieved from the SPL feature service 'a17e134c51f74252bca8db3c66ef032e' 
        function applyDefinitionQuery() {
-        var svcLyr = this.gMyWebmap.findLayerById ('242950b01cac4ca5b421ccd3dfdf28fa'); 
+        var svcLyr = this.gMyWebmap.findLayerById ('a17e134c51f74252bca8db3c66ef032e' ); 
         console.log( "Layer is");
         console.log( svcLyr);
 
@@ -129,7 +129,7 @@
                 //"7aee6b93589845399d4cd7275e056cd3"
                 const webmap = new WebMap ({
                     portalItem: {
-                        id:  "4874f6904eeb4dea90ba7c217f37222e"
+                        id:  "7aee6b93589845399d4cd7275e056cd3"
                     }
                 });
 
