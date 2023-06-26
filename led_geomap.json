@@ -13,17 +13,11 @@
     {
       "kind": "main",
       "tag": "com-sap-custom-ledgeomap",
-      "url": "https://phomble.github.io/widget_led/led_geomap_component.js",
+      "url": "https://phomble.github.io/widget_led/simple.js",
       "integrity": "",
       "ignoreIntegrity": true
     },
-    {
-      "kind": "builder",
-      "tag": "com-sap-custom-ledgeomap-aps",
-      "url": "https://phomble.github.io/widget_led/led_geomap_aps.js",
-      "integrity": "",
-      "ignoreIntegrity": true
-    }
+   
   ],
   "properties": {
     "metadata": {
