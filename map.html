@@ -42,7 +42,7 @@
       });
 
       // Create a UI with the filter expressions
-      const sqlExpressions = ["Choose a SQL where clause...", "Roll_LandValue < 200000", "TaxRateArea = 10853", "Bedrooms5 > 0", "UseType = 'Residential'", "Roll_RealEstateExemp > 0"];
+      const sqlExpressions = ["Choose a SQL where clause...", "ZipcodeName = 93505", "Status = ACTIVE", "Bedrooms5 > 0", "UseType = 'Residential'", "Roll_RealEstateExemp > 0"];
 
       // UI
       const selectFilter = document.createElement("select");
@@ -65,7 +65,7 @@
         outFields: ["*"],
         popupTemplate: {
           title: "{UseType}",
-          content: "Description: {UseDescription}. Land value: {Roll_LandValue}"
+          content: "Zip: {ZipcodeName}. Status: {Status}"
         },
         definitionExpression: "1=0"
       });
