@@ -1,30 +1,29 @@
-<html>
+ <html>
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
-  <title>ArcGIS Maps SDK for JavaScript Tutorials: Query a feature layer (spatial)</title>
+  <title>ArcGIS Maps</title>
   <style>
     html, body, #viewDiv {
       padding: 0;
       margin: 0;
       height: 100%;
       width: 100%;
-    }
+    };
+    .esri-ui-corner .esri-component.esri-widget--panel {
+    width: 200px !important;
+};
   </style>
   <link rel="stylesheet" href="https://js.arcgis.com/4.27/esri/themes/light/main.css">
   <script src="https://js.arcgis.com/4.27/"></script>
   <script>
-    require([
 
+    require([
       "esri/config",
       "esri/Map",
       "esri/views/MapView",
-
-      "esri/widgets/Sketch",
-      "esri/layers/GraphicsLayer",
-      "esri/layers/FeatureLayer"
-
-    ], function(esriConfig, Map, MapView, Sketch, GraphicsLayer, FeatureLayer) {
+      "esri/layers/FeatureLayer",
+    ], function(esriConfig, Map, MapView, FeatureLayer) {
 
       esriConfig.apiKey = "AAPKbe7b507e8edb44dfb63ca6aa6d13507fYqdAozH2WMvdlQbvKEmQDcXQ13ceYpzWv9oetw1LNAP6AMHd-BU9OQRPOqNph05A";
 
@@ -39,50 +38,48 @@
         zoom: 13
       });
 
-      // Add sketch widget
-      const graphicsLayerSketch = new GraphicsLayer();
-      map.add(graphicsLayerSketch);
+      // SQL query array
+      const parcelLayerSQL = ["Choose a SQL where clause...", "UseType = 'Residential'",  "UseType = 'Government'", "UseType = 'Irrigated Farm'", "TaxRateArea = 10853", "TaxRateArea = 10860", "TaxRateArea = 08637", "Roll_LandValue > 1000000", "Roll_LandValue < 1000000"];
+      let whereClause = parcelLayerSQL[0];
 
-      const sketch = new Sketch({
-        layer: graphicsLayerSketch,
-        view: view,
-        creationMode: "update" // Auto-select
+      // Add SQL UI
+      const select = document.createElement("select");
+      select.setAttribute("class", "esri-widget esri-select");
+      select.setAttribute("style", "width: 200px; font-family: 'Avenir Next'; font-size: 1em");
+      parcelLayerSQL.forEach(function(query){
+        let option = document.createElement("option");
+        option.innerHTML = query;
+        option.value = query;
+        select.appendChild(option);
       });
 
-      view.ui.add(sketch, "top-right");
+      view.ui.add(select, "top-right");
 
-      // Add sketch events to listen for and execute query
-      sketch.on("update", (event) => {
+       // Listen for changes
+      select.addEventListener('change', (event) => {
+        whereClause = event.target.value;
 
-        // Create
-        if (event.state === "start") {
-          queryFeaturelayer(event.graphics[0].geometry);
-        }
-        if (event.state === "complete"){
-          graphicsLayerSketch.remove(event.graphics[0]); // Clear the graphic when a user clicks off of it or sketches new one
-        }
-        // Change
-        if (event.toolEventInfo && (event.toolEventInfo.type === "scale-stop" || event.toolEventInfo.type === "reshape-stop" || event.toolEventInfo.type === "move-stop")) {
-          queryFeaturelayer(event.graphics[0].geometry);
-        }
+        queryFeatureLayer(view.extent);
 
       });
 
-      // Reference query layer
-      const parcelLayer = new FeatureLayer({
+      // Get query layer and set up query
+ const parcelLayer = new FeatureLayer({
         url: "https://idpgis.ncep.noaa.gov/arcgis/rest/services/NWS_Forecasts_Guidance_Warnings/watch_warn_adv/MapServer/1",
       });
 
-      function queryFeaturelayer(geometry) {
+      function queryFeatureLayer(extent) {
 
         const parcelQuery = {
+         where: whereClause,  // Set by select element
          spatialRelationship: "intersects", // Relationship operation to apply
-         geometry: geometry,  // The sketch feature geometry
+         geometry: extent, // Restricted to visible extent of the map
          outFields: ["APN","UseType","TaxRateCity","Roll_LandValue"], // Attributes to return
          returnGeometry: true
         };
 
         parcelLayer.queryFeatures(parcelQuery)
+
         .then((results) => {
 
           console.log("Feature count: " + results.features.length)
@@ -90,15 +87,13 @@
           displayResults(results);
 
         }).catch((error) => {
-          console.log(error);
+          console.log(error.error);
         });
 
       }
 
-      // Show features (graphics)
       function displayResults(results) {
-
-      // Create a blue polygon
+        // Create a blue polygon
         const symbol = {
           type: "simple-fill",
           color: [ 20, 130, 200, 0.5 ],
@@ -113,7 +108,7 @@
           content: "Type: {UseType} <br> Land value: {Roll_LandValue} <br> Tax Rate City: {TaxRateCity}"
         };
 
-        // Set symbol and popup
+        // Assign styles and popup to features
         results.features.map((feature) => {
           feature.symbol = symbol;
           feature.popupTemplate = popupTemplate;
@@ -123,7 +118,7 @@
         // Clear display
         view.closePopup();
         view.graphics.removeAll();
-       // Add features to graphics layer
+        // Add features to graphics layer
         view.graphics.addMany(results.features);
 
       }
