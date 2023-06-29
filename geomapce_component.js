@@ -31,7 +31,7 @@
     //
     // A definition query filters what was first retrieved from the SPL feature service 'a17e134c51f74252bca8db3c66ef032e' 
        function applyDefinitionQuery() {
-        var svcLyr = this.gMyWebmap.findLayerById ('a17e134c51f74252bca8db3c66ef032e' ); 
+        var svcLyr = this.gMyWebmap.findLayerById ('a6fdf2ee0e454393a53ba32b9838b303' ); 
         console.log( "Layer is");
         console.log( svcLyr);
 
