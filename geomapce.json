@@ -13,14 +13,14 @@
     {
       "kind": "main",
       "tag": "com-sap-custom-geomapce",
-      "url": "https://phomble.github.io/sacwidget/geomapce_component.js",
+      "url": "https://phomble.github.io/widget_led/geomapce_component.js",
       "integrity": "",
       "ignoreIntegrity": true
     },
     {
       "kind": "builder",
       "tag": "com-sap-custom-geomapce-aps",
-      "url": "https://phomble.github.io/sacwidget/geomapce_aps.js",
+      "url": "https://phomble.github.io/widget_led/geomapce_aps.js",
       "integrity": "",
       "ignoreIntegrity": true
     }
