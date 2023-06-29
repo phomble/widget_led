@@ -111,20 +111,38 @@
                 "esri/views/ui/UI",
                 "esri/views/ui/DefaultUI" 
             ], function(esriConfig, WebMap, MapView, BasemapToggle, FeatureLayer, TimeSlider, Expand, RouteTask, RouteParameters, FeatureSet, Sublayer, Graphic) {
-        
+        //
+                
+
+      esriConfig.apiKey = "AAPKbe7b507e8edb44dfb63ca6aa6d13507fYqdAozH2WMvdlQbvKEmQDcXQ13ceYpzWv9oetw1LNAP6AMHd-BU9OQRPOqNph05A";
+
+      const map = new Map({
+        basemap: "arcgis-topographic" //Basemap styles service
+      });
+      const view = new MapView({
+        container: "viewDiv",
+        map: map,
+        center: [-118.80543,34.03000], //Longitude, latitude
+        zoom: 13,
+        constraints: {
+          snapToZoom: false
+        }                
+                
+                
+         //
                 // set portal and API Key
-                esriConfig.portalUrl = gPassedPortalURL
+        //        esriConfig.portalUrl = gPassedPortalURL
 
                 //  set esri api Key 
-                esriConfig.apiKey = gPassedAPIkey
+        //        esriConfig.apiKey = gPassedAPIkey
                 
                  //  set hstoken 
            //     esriConfig.hstoken = gPassedHSToken
         
                 // set routing service
-                var routeTask = new RouteTask({
-                    url: "https://route-api.arcgis.com/arcgis/rest/services/World/Route/NAServer/Route_World"
-                });
+         //       var routeTask = new RouteTask({
+         //           url: "https://route-api.arcgis.com/arcgis/rest/services/World/Route/NAServer/Route_World"
+         //       });
         
                 //"7aee6b93589845399d4cd7275e056cd3"
                 const webmap = new WebMap ({
