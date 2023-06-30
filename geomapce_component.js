@@ -52,6 +52,7 @@
       // Get query layer and set up query
       const parcelLayer = new FeatureLayer({
         url: "https://services3.arcgis.com/GVgbJbqm8hXASVYi/arcgis/rest/services/LA_County_Parcels/FeatureServer/0",
+          gMyLayer=parselLayer;
       });
 
       function queryFeatureLayer(extent) {
